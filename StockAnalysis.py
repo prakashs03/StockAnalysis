@@ -29,7 +29,7 @@ import seaborn as sns
 # In[5]:
 
 
-df = pd.read_csv("sector data- sheet1.csv")
+df = pd.read_csv("sector_data - sheet1.csv")
 
 # Show the first few rows
 df.head()
@@ -40,7 +40,7 @@ df.head()
 
 import pandas as pd
 
-df = pd.read_csv("sector data- sheet1.csv")
+df = pd.read_csv("sector_data - sheet1.csv")
 df.head()
 
 
