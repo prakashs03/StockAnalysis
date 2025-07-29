@@ -118,18 +118,18 @@ for folder_name in os.listdir(data_dir):
                         stock_data = yaml.safe_load(file)
 
                        if isinstance(stock_data, list):
-    for entry in stock_data:
-        if isinstance(entry, dict):
-            entry["Month"] = folder_name
-            if "Ticker" in entry:
-                entry["Symbol"] = entry.pop("Ticker")
-            all_data.append(entry)
+                           for entry in stock_data:
+                               if isinstance(entry, dict):
+                                   entry["Month"] = folder_name
+                                   if "Ticker" in entry:
+                                       entry["Symbol"] = entry.pop("Ticker")
+                                   all_data.append(entry)
 
-elif isinstance(stock_data, dict):
-    stock_data["Month"] = folder_name
-    if "Ticker" in stock_data:
-        stock_data["Symbol"] = stock_data.pop("Ticker")
-    all_data.append(stock_data)
+                       elif isinstance(stock_data, dict):
+                           stock_data["Month"] = folder_name
+                           if "Ticker" in stock_data:
+                               stock_data["Symbol"] = stock_data.pop("Ticker")
+                           all_data.append(stock_data)
 
                             
                     except Exception as e:
