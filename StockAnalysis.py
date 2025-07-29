@@ -93,33 +93,48 @@ df.isnull().sum()
 
 
 import os
-import yaml
-import pandas as pd
+import yaml  # make sure this is imported at the top if not already
 
-# Path to the main "data" folder
-data_dir = "data"
-
-
-# Store results here
 all_data = []
 
-# Loop through each folder (like 'May 2023', 'June 2023')
+# Read YAML files inside subfolders of data/
 for folder_name in os.listdir(data_dir):
     folder_path = os.path.join(data_dir, folder_name)
 
-    # Make sure it's a folder (skip any files)
     if os.path.isdir(folder_path):
         for filename in os.listdir(folder_path):
             if filename.endswith(".yaml"):
                 file_path = os.path.join(folder_path, filename)
+
+                if not os.path.exists(file_path):
+                    continue
+
                 with open(file_path, 'r') as file:
                     try:
                         stock_data = yaml.safe_load(file)
-                        # Add the month info from folder
-                        stock_data['Month'] = folder_name
-                        all_data.append(stock_data)
+
+                        if isinstance(stock_data, list):
+                            for entry in stock_data:
+                                if isinstance(entry, dict):
+                                    entry["Month"] = folder_name
+                                    all_data.append(entry)
+                        elif isinstance(stock_data, dict):
+                            stock_data["Month"] = folder_name
+                            all_data.append(stock_data)
+                            
                     except Exception as e:
-                        print(f"Error reading {file_path}: {e}")
+                        st.warning(f"⚠️ Error reading {file_path}: {e}")
+
+# ✅ Step 1: Debug and verify
+st.write(f"✅ Total YAML records loaded: {len(all_data)}")
+
+if len(all_data) > 0:
+    st.write("🔍 Sample record from all_data:")
+    st.json(all_data[0])
+else:
+    st.error("❌ No data loaded from YAML files. Check folder structure or file formats.")
+    st.stop()
+
 
 # Convert to DataFrame
 stock_df = pd.DataFrame(all_data)
