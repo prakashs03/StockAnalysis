@@ -161,15 +161,48 @@ data_dir = r"C:\Users\Admin\Desktop\Prakash"  # Change if different
 # STEP 2: Load all .yaml files into one list
 all_data = []
 
-for filename in os.listdir(data_dir):
-    if filename.endswith(".yaml"):
-        file_path = os.path.join(data_dir, filename)
-        with open(file_path, 'r') as file:
-            try:
-                content = yaml.safe_load(file)
-                all_data.append(content)
-            except Exception as e:
-                print(f"Error loading {filename}: {e}")
+import zipfile
+import os
+import streamlit as st
+import yaml  # make sure this is imported at the top
+
+data_dir = "data"
+
+# ✅ Unzip if needed
+if not os.path.exists(data_dir) and os.path.exists("data.zip"):
+    with zipfile.ZipFile("data.zip", "r") as zip_ref:
+        zip_ref.extractall(".")
+
+# ✅ Stop the app if data folder is still missing
+if not os.path.exists(data_dir):
+    st.error("❌ 'data' folder not found. Please make sure 'data.zip' is uploaded.")
+    st.stop()
+
+# ✅ Load all YAML data
+all_data = []
+
+for folder_name in os.listdir(data_dir):
+    folder_path = os.path.join(data_dir, folder_name)
+
+    if os.path.isdir(folder_path):
+        for filename in os.listdir(folder_path):
+            if filename.endswith(".yaml"):
+                file_path = os.path.join(folder_path, filename)
+                with open(file_path, 'r') as file:
+                    try:
+                        stock_data = yaml.safe_load(file)
+
+                        if isinstance(stock_data, list):
+                            for entry in stock_data:
+                                if isinstance(entry, dict):
+                                    entry['Month'] = folder_name
+                                    all_data.append(entry)
+                        elif isinstance(stock_data, dict):
+                            stock_data['Month'] = folder_name
+                            all_data.append(stock_data)
+                    except Exception as e:
+                        st.warning(f"⚠️ Error reading {file_path}: {e}")
+
 
 # STEP 3: Convert to DataFrame
 stock_df = pd.DataFrame(all_data)
