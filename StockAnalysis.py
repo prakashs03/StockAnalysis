@@ -197,15 +197,13 @@ stock_df.head()
 # In[7]:
 
 
-# import yaml
+import yaml
 
-# file_path = r"C:\Users\Admin\Desktop\Prakash\data\2024-11\2024-11-12_05-30-00.yaml"
+with open(file_path, 'r') as f:
+    content = yaml.safe_load(f)
 
-# with open(file_path, 'r') as f:
-#     content = yaml.safe_load(f)
-
-# print(type(content))
-# print(content)
+print(type(content))
+print(content)
 
 
 # In[8]:
