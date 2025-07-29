@@ -97,7 +97,7 @@ import yaml
 import pandas as pd
 
 # Path to the main "data" folder
-data_dir = r"C:\Users\Admin\Desktop\Prakash"
+data_dir = "data"
 
 
 # Store results here
@@ -140,7 +140,7 @@ import yaml
 import pandas as pd
 
 # STEP 1: Set your folder path
-data_dir = r"C:\Users\Admin\Desktop\Prakash"  # Change if different
+data_dir = "data"   # Change if different
 
 # STEP 2: Load all .yaml files into one list
 all_data = []
@@ -168,7 +168,7 @@ import yaml
 import pandas as pd
 
 # Path to the main folder containing all month folders
-data_dir = r"C:\Users\Admin\Desktop\Prakash\data"
+data_dir = "data"
 
 # Store all YAML records
 all_data = []
