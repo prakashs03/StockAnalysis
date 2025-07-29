@@ -166,7 +166,18 @@ import yaml
 import pandas as pd
 
 # Path to the main folder containing all month folders
-data_dir = r"C:\Users\Admin\Desktop\Prakash\data"
+data_dir = "data"
+
+#  Unzip if needed
+if not os.path.exists(data_dir) and os.path.exists("data.zip"):
+    with zipfile.ZipFile("data.zip", "r") as zip_ref:
+        zip_ref.extractall(".")
+
+#  Stop if data folder is still missing
+if not os.path.exists(data_dir):
+    st.error(" 'data' folder not found. Please upload data.zip to the repo.")
+    st.stop()
+
 
 # Store all YAML records
 all_data = []
@@ -254,7 +265,7 @@ print("First record:", all_data[0])
 import os
 import yaml
 
-data_dir = r"C:\Users\Admin\Desktop\Prakash\data"
+data_dir = "data"
 file_count = 0
 all_data = []
 
