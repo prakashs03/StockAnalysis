@@ -25,9 +25,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# To show graphs inside notebook
-get_ipython().run_line_magic('matplotlib', 'inline')
-
 
 # In[5]:
 
@@ -90,10 +87,6 @@ df.describe()
 df.isnull().sum()
 
 
-# In[15]:
-
-
-get_ipython().run_line_magic('pip', 'install pyyaml')
 
 
 # In[3]:
@@ -590,9 +583,6 @@ merged_df.head()
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-# For inline plots in Jupyter
-get_ipython().run_line_magic('matplotlib', 'inline')
 
 # Set style
 sns.set(style="whitegrid")
