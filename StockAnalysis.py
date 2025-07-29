@@ -9,14 +9,6 @@ if not os.path.exists("data") and os.path.exists("data.zip"):
     with zipfile.ZipFile("data.zip", "r") as zip_ref:
         zip_ref.extractall(".")
 
-# In[1]:
-
-
-get_ipython().system('pip install pandas matplotlib seaborn')
-
-
-# In[2]:
-
 
 get_ipython().run_line_magic('pip', 'install pandas matplotlib seaborn')
 
