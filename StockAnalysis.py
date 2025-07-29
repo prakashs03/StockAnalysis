@@ -102,10 +102,28 @@ data_dir = r"C:\Users\Admin\Desktop\Prakash"
 all_data = []
 
 # Loop through each folder (like 'May 2023', 'June 2023')
+import zipfile
+import os
+import streamlit as st
+
+data_dir = "data"
+all_data = []
+
+#  1. Unzip if needed
+if not os.path.exists(data_dir) and os.path.exists("data.zip"):
+    with zipfile.ZipFile("data.zip", "r") as zip_ref:
+        zip_ref.extractall(".")
+
+#  2. Stop app if data/ folder still missing
+if not os.path.exists(data_dir):
+    st.error(" 'data/' folder not found. Please make sure 'data.zip' is uploaded to the repo.")
+    st.stop()
+
+#  3. Now safely read all YAML files
 for folder_name in os.listdir(data_dir):
     folder_path = os.path.join(data_dir, folder_name)
 
-    # Make sure it's a folder (skip any files)
+    # Only go into folders (e.g., "2023-10", "2024-01", etc.)
     if os.path.isdir(folder_path):
         for filename in os.listdir(folder_path):
             if filename.endswith(".yaml"):
@@ -113,11 +131,11 @@ for folder_name in os.listdir(data_dir):
                 with open(file_path, 'r') as file:
                     try:
                         stock_data = yaml.safe_load(file)
-                        # Add the month info from folder
-                        stock_data['Month'] = folder_name
+                        stock_data['Month'] = folder_name  # add month info
                         all_data.append(stock_data)
                     except Exception as e:
-                        print(f"Error reading {file_path}: {e}")
+                        st.warning(f"⚠️ Error reading {file_path}: {e}")
+
 
 # Convert to DataFrame
 stock_df = pd.DataFrame(all_data)
