@@ -12,18 +12,6 @@ if not os.path.exists("data") and os.path.exists("data.zip"):
 # In[1]:
 
 
-get_ipython().system('pip install pandas matplotlib seaborn')
-
-
-# In[2]:
-
-
-get_ipython().run_line_magic('pip', 'install pandas matplotlib seaborn')
-
-
-# In[1]:
-
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
