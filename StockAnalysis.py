@@ -254,7 +254,6 @@ stock_df.head()
 
 import yaml
 
-file_path = r"C:\Users\Admin\Desktop\Prakash\data\2024-11\2024-11-12_05-30-00.yaml"
 
 with open(file_path, 'r') as f:
     content = yaml.safe_load(f)
