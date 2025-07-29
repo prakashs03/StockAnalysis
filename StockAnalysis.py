@@ -197,15 +197,15 @@ stock_df.head()
 # In[7]:
 
 
-import yaml
+# import yaml
 
-file_path = r"C:\Users\Admin\Desktop\Prakash\data\2024-11\2024-11-12_05-30-00.yaml"
+# file_path = r"C:\Users\Admin\Desktop\Prakash\data\2024-11\2024-11-12_05-30-00.yaml"
 
-with open(file_path, 'r') as f:
-    content = yaml.safe_load(f)
+# with open(file_path, 'r') as f:
+#     content = yaml.safe_load(f)
 
-print(type(content))
-print(content)
+# print(type(content))
+# print(content)
 
 
 # In[8]:
@@ -256,34 +256,38 @@ print("First record:", all_data[0])
 import os
 import yaml
 
-data_dir = r"C:\Users\Admin\Desktop\Prakash\data"
-file_count = 0
+data_dir = "data"
 all_data = []
 
-for root, dirs, files in os.walk(data_dir):
-    for filename in files:
-        if filename.endswith(".yaml"):
-            file_path = os.path.join(root, filename)
-            file_count += 1
-            try:
-                with open(file_path, "r") as f:
-                    content = yaml.safe_load(f)
-                    print(f"✅ File: {filename} → Type: {type(content)}")
+if not os.path.exists(data_dir):
+    st.error("❌ 'data' folder not found.")
+    st.stop()
 
-                    # If it's a list of records
-                    if isinstance(content, list):
-                        for record in content:
-                            if isinstance(record, dict):
-                                all_data.append(record)
-                    # If it's just one record
-                    elif isinstance(content, dict):
-                        all_data.append(content)
-            except Exception as e:
-                print(f"❌ Error in {file_path}: {e}")
+for folder_name in os.listdir(data_dir):
+    folder_path = os.path.join(data_dir, folder_name)
 
-print(f"\n🔍 Total YAML files found: {file_count}")
-print(f"📦 Total records loaded into all_data: {len(all_data)}")
+    if os.path.isdir(folder_path):
+        for filename in os.listdir(folder_path):
+            if filename.endswith(".yaml"):
+                file_path = os.path.join(folder_path, filename)
 
+                if not os.path.exists(file_path):
+                    continue
+
+                with open(file_path, 'r') as file:
+                    try:
+                        stock_data = yaml.safe_load(file)
+
+                        if isinstance(stock_data, list):
+                            for entry in stock_data:
+                                if isinstance(entry, dict):
+                                    entry['Month'] = folder_name
+                                    all_data.append(entry)
+                        elif isinstance(stock_data, dict):
+                            stock_data['Month'] = folder_name
+                            all_data.append(stock_data)
+                    except Exception as e:
+                        st.warning(f"⚠️ Error reading {file_path}: {e}")
 
 # In[16]:
 
