@@ -9,6 +9,17 @@ if not os.path.exists("data") and os.path.exists("data.zip"):
     with zipfile.ZipFile("data.zip", "r") as zip_ref:
         zip_ref.extractall(".")
 
+# In[1]:
+
+
+get_ipython().system('pip install pandas matplotlib seaborn')
+
+
+# In[2]:
+
+
+get_ipython().run_line_magic('pip', 'install pandas matplotlib seaborn')
+
 
 # In[1]:
 
@@ -26,10 +37,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# To show graphs inside notebook
+get_ipython().run_line_magic('matplotlib', 'inline')
+
+
 # In[5]:
 
 
-df = pd.read_csv("Sector_data - Sheet1.csv")
+df = pd.read_csv("sector data- sheet1.csv")
 
 # Show the first few rows
 df.head()
@@ -40,7 +55,7 @@ df.head()
 
 import pandas as pd
 
-df = pd.read_csv("Sector_data - Sheet1.csv")
+df = pd.read_csv("sector data- sheet1.csv")
 df.head()
 
 
@@ -63,7 +78,7 @@ print(os.listdir())
 
 import pandas as pd
 
-df = pd.read_csv("Sector_data - Sheet1.csv")
+df = pd.read_csv("sector_data - sheet1.csv")
 df.head()
 
 
@@ -87,6 +102,12 @@ df.describe()
 df.isnull().sum()
 
 
+# In[15]:
+
+
+get_ipython().run_line_magic('pip', 'install pyyaml')
+
+
 # In[3]:
 
 
@@ -94,33 +115,18 @@ import os
 import yaml
 import pandas as pd
 
+# Path to the main "data" folder
+data_dir = r"C:\Users\Admin\Desktop\Prakash"
+
 
 # Store results here
 all_data = []
 
 # Loop through each folder (like 'May 2023', 'June 2023')
-import zipfile
-import os
-import streamlit as st
-
-data_dir = "data"
-all_data = []
-
-#  1. Unzip if needed
-if not os.path.exists(data_dir) and os.path.exists("data.zip"):
-    with zipfile.ZipFile("data.zip", "r") as zip_ref:
-        zip_ref.extractall(".")
-
-#  2. Stop app if data/ folder still missing
-if not os.path.exists(data_dir):
-    st.error(" 'data/' folder not found. Please make sure 'data.zip' is uploaded to the repo.")
-    st.stop()
-
-#  3. Now safely read all YAML files
 for folder_name in os.listdir(data_dir):
     folder_path = os.path.join(data_dir, folder_name)
 
-    # Only go into folders (e.g., "2023-10", "2024-01", etc.)
+    # Make sure it's a folder (skip any files)
     if os.path.isdir(folder_path):
         for filename in os.listdir(folder_path):
             if filename.endswith(".yaml"):
@@ -128,11 +134,11 @@ for folder_name in os.listdir(data_dir):
                 with open(file_path, 'r') as file:
                     try:
                         stock_data = yaml.safe_load(file)
-                        stock_data['Month'] = folder_name  # add month info
+                        # Add the month info from folder
+                        stock_data['Month'] = folder_name
                         all_data.append(stock_data)
                     except Exception as e:
-                        st.warning(f"⚠️ Error reading {file_path}: {e}")
-
+                        print(f"Error reading {file_path}: {e}")
 
 # Convert to DataFrame
 stock_df = pd.DataFrame(all_data)
@@ -152,52 +158,21 @@ import os
 import yaml
 import pandas as pd
 
+# STEP 1: Set your folder path
+data_dir = r"C:\Users\Admin\Desktop\Prakash"  # Change if different
 
 # STEP 2: Load all .yaml files into one list
 all_data = []
 
-import zipfile
-import os
-import streamlit as st
-import yaml  # make sure this is imported at the top
-
-data_dir = "data"
-
-# ✅ Unzip if needed
-if not os.path.exists(data_dir) and os.path.exists("data.zip"):
-    with zipfile.ZipFile("data.zip", "r") as zip_ref:
-        zip_ref.extractall(".")
-
-# ✅ Stop the app if data folder is still missing
-if not os.path.exists(data_dir):
-    st.error("❌ 'data' folder not found. Please make sure 'data.zip' is uploaded.")
-    st.stop()
-
-# ✅ Load all YAML data
-all_data = []
-
-for folder_name in os.listdir(data_dir):
-    folder_path = os.path.join(data_dir, folder_name)
-
-    if os.path.isdir(folder_path):
-        for filename in os.listdir(folder_path):
-            if filename.endswith(".yaml"):
-                file_path = os.path.join(folder_path, filename)
-                with open(file_path, 'r') as file:
-                    try:
-                        stock_data = yaml.safe_load(file)
-
-                        if isinstance(stock_data, list):
-                            for entry in stock_data:
-                                if isinstance(entry, dict):
-                                    entry['Month'] = folder_name
-                                    all_data.append(entry)
-                        elif isinstance(stock_data, dict):
-                            stock_data['Month'] = folder_name
-                            all_data.append(stock_data)
-                    except Exception as e:
-                        st.warning(f"⚠️ Error reading {file_path}: {e}")
-
+for filename in os.listdir(data_dir):
+    if filename.endswith(".yaml"):
+        file_path = os.path.join(data_dir, filename)
+        with open(file_path, 'r') as file:
+            try:
+                content = yaml.safe_load(file)
+                all_data.append(content)
+            except Exception as e:
+                print(f"Error loading {filename}: {e}")
 
 # STEP 3: Convert to DataFrame
 stock_df = pd.DataFrame(all_data)
@@ -212,18 +187,7 @@ import yaml
 import pandas as pd
 
 # Path to the main folder containing all month folders
-data_dir = "data"
-
-#  Unzip if needed
-if not os.path.exists(data_dir) and os.path.exists("data.zip"):
-    with zipfile.ZipFile("data.zip", "r") as zip_ref:
-        zip_ref.extractall(".")
-
-#  Stop if data folder is still missing
-if not os.path.exists(data_dir):
-    st.error(" 'data' folder not found. Please upload data.zip to the repo.")
-    st.stop()
-
+data_dir = r"C:\Users\Admin\Desktop\Prakash\data"
 
 # Store all YAML records
 all_data = []
@@ -254,6 +218,7 @@ stock_df.head()
 
 import yaml
 
+file_path = r"C:\Users\Admin\Desktop\Prakash\data\2024-11\2024-11-12_05-30-00.yaml"
 
 with open(file_path, 'r') as f:
     content = yaml.safe_load(f)
@@ -280,7 +245,7 @@ stock_df.rename(columns={"Ticker": "Symbol"}, inplace=True)
 # In[11]:
 
 
-sector_df = pd.read_csv("Sector_data - Sheet1.csv")
+sector_df = pd.read_csv("sector_data - sheet1.csv")
 sector_df.head()
 
 
@@ -310,7 +275,7 @@ print("First record:", all_data[0])
 import os
 import yaml
 
-data_dir = "data"
+data_dir = r"C:\Users\Admin\Desktop\Prakash\data"
 file_count = 0
 all_data = []
 
