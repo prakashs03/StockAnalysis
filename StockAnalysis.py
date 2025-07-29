@@ -117,16 +117,20 @@ for folder_name in os.listdir(data_dir):
                     try:
                         stock_data = yaml.safe_load(file)
 
-                        if isinstance(stock_data, list):
-                            for entry in stock_data:
-                                if isinstance(entry, dict):
-                                    entry["Month"] = folder_name
-                                    all_data.append(entry)
-                        elif isinstance(stock_data, dict):
-                            stock_data["Month"] = folder_name
-                             if "Ticker" in entry:
-                                entry["Symbol"] = entry.pop("Ticker")
-                            all_data.append(stock_data)
+                       if isinstance(stock_data, list):
+    for entry in stock_data:
+        if isinstance(entry, dict):
+            entry["Month"] = folder_name
+            if "Ticker" in entry:
+                entry["Symbol"] = entry.pop("Ticker")
+            all_data.append(entry)
+
+elif isinstance(stock_data, dict):
+    stock_data["Month"] = folder_name
+    if "Ticker" in stock_data:
+        stock_data["Symbol"] = stock_data.pop("Ticker")
+    all_data.append(stock_data)
+
                             
                     except Exception as e:
                         st.warning(f"⚠️ Error reading {file_path}: {e}")
