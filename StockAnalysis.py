@@ -95,9 +95,12 @@ df.isnull().sum()
 import os
 import yaml  # make sure this is imported at the top if not already
 
+# ✅ Define the data folder path FIRST
+data_dir = "data"
+
 all_data = []
 
-# Read YAML files inside subfolders of data/
+# ✅ Now safe to loop over data_dir
 for folder_name in os.listdir(data_dir):
     folder_path = os.path.join(data_dir, folder_name)
 
@@ -108,6 +111,7 @@ for folder_name in os.listdir(data_dir):
 
                 if not os.path.exists(file_path):
                     continue
+                # continue with open(file_path, 'r') as file ...
 
                 with open(file_path, 'r') as file:
                     try:
