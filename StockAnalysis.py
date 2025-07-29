@@ -227,9 +227,40 @@ stock_df.rename(columns={"Ticker": "Symbol"}, inplace=True)
 sector_df = pd.read_csv("Sector_data - Sheet1.csv")
 sector_df.head()
 
+# Read the CSV (correct name and path)
+sector_df = pd.read_csv("Sector_data - Sheet1.csv")
+
+# Clean column names
+stock_df.columns = stock_df.columns.str.strip()
+sector_df.columns = sector_df.columns.str.strip()
+
+# Capitalize all values in Symbol column
+stock_df['Symbol'] = stock_df['Symbol'].astype(str).str.strip().str.upper()
+sector_df['Symbol'] = sector_df['Symbol'].astype(str).str.strip().str.upper()
+
+# Confirm existence before merge
+st.write("stock_df columns:", stock_df.columns.tolist())
+st.write("sector_df columns:", sector_df.columns.tolist())
+
+if "Symbol" not in stock_df.columns or "Symbol" not in sector_df.columns:
+    st.error("❌ 'Symbol' column missing. Please check your file structure.")
+    st.stop()
+
+# Merge safely
+merged_df = pd.merge(stock_df, sector_df, on="Symbol", how="left")
 
 # In[12]:
 
+st.write("✅ stock_df columns:", stock_df.columns.tolist())
+st.write("✅ sector_df columns:", sector_df.columns.tolist())
+
+if "Symbol" not in stock_df.columns:
+    st.error("❌ 'Symbol' column is missing in stock_df")
+    st.stop()
+    
+if "Symbol" not in sector_df.columns:
+    st.error("❌ 'Symbol' column is missing in sector_df")
+    st.stop()
 
 merged_df = pd.merge(stock_df, sector_df, on="Symbol", how="left")
 merged_df.head()
