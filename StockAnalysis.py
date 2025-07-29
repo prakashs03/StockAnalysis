@@ -29,7 +29,7 @@ import seaborn as sns
 # In[5]:
 
 
-df = pd.read_csv("sector_data - sheet1.csv")
+df = pd.read_csv("Sector_data - Sheet1.csv")
 
 # Show the first few rows
 df.head()
@@ -40,7 +40,7 @@ df.head()
 
 import pandas as pd
 
-df = pd.read_csv("sector_data - sheet1.csv")
+df = pd.read_csv("Sector_data - Sheet1.csv")
 df.head()
 
 
@@ -63,7 +63,7 @@ print(os.listdir())
 
 import pandas as pd
 
-df = pd.read_csv("sector_data - sheet1.csv")
+df = pd.read_csv("Sector_data - Sheet1.csv")
 df.head()
 
 
@@ -224,7 +224,7 @@ stock_df.rename(columns={"Ticker": "Symbol"}, inplace=True)
 # In[11]:
 
 
-sector_df = pd.read_csv("sector_data - sheet1.csv")
+sector_df = pd.read_csv("Sector_data - Sheet1.csv")
 sector_df.head()
 
 
