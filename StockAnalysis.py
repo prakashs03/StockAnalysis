@@ -233,6 +233,32 @@ sector_df = pd.read_csv("Sector_data - Sheet1.csv")
 # Clean column names
 stock_df.columns = stock_df.columns.str.strip()
 sector_df.columns = sector_df.columns.str.strip()
+# 🧼 Clean and validate 'Symbol' before merging
+
+# Step 1: Strip column name spaces
+stock_df.columns = stock_df.columns.str.strip()
+sector_df.columns = sector_df.columns.str.strip()
+
+# Step 2: Print actual column names for debugging
+st.write("📌 stock_df columns:", stock_df.columns.tolist())
+st.write("📌 sector_df columns:", sector_df.columns.tolist())
+
+# Step 3: Stop app if 'Symbol' missing
+if "Symbol" not in stock_df.columns:
+    st.error("❌ 'Symbol' column missing in stock_df.")
+    st.stop()
+if "Symbol" not in sector_df.columns:
+    st.error("❌ 'Symbol' column missing in sector_df.")
+    st.stop()
+
+# Step 4: Clean values in Symbol
+stock_df["Symbol"] = stock_df["Symbol"].astype(str).str.strip().str.upper()
+sector_df["Symbol"] = sector_df["Symbol"].astype(str).str.strip().str.upper()
+
+# Step 5: Merge safely
+merged_df = pd.merge(stock_df, sector_df, on="Symbol", how="left")
+st.success("✅ Merged successfully!")
+st.dataframe(merged_df.head())
 
 # Capitalize all values in Symbol column
 stock_df['Symbol'] = stock_df['Symbol'].astype(str).str.strip().str.upper()
