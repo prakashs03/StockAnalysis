@@ -307,14 +307,29 @@ stock_df.rename(columns={'Ticker': 'Symbol'}, inplace=True)
 
 sector_df = pd.read_csv("Sector_data - Sheet1.csv")
 
-# Strip any unwanted spaces from column names
+# Strip unwanted spaces from all column names
+stock_df.columns = stock_df.columns.str.strip()
 sector_df.columns = sector_df.columns.str.strip()
+
+# Standardize 'Symbol' values to uppercase, no whitespace
+if "Symbol" in stock_df.columns:
+    stock_df['Symbol'] = stock_df['Symbol'].astype(str).str.strip().str.upper()
+else:
+    st.error("❌ 'Symbol' column missing in stock_df.")
+    st.stop()
+
+if "Symbol" in sector_df.columns:
+    sector_df['Symbol'] = sector_df['Symbol'].astype(str).str.strip().str.upper()
+else:
+    st.error("❌ 'Symbol' column missing in sector_df.")
+    st.stop()
 
 # Merge both DataFrames using Symbol
 merged_df = pd.merge(stock_df, sector_df, on="Symbol", how="left")
 
 # Show sample
-merged_df.head()
+st.write("✅ Sample merged data:")
+st.dataframe(merged_df.head())
 
 
 # In[19]:
