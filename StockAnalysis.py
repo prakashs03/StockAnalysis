@@ -94,9 +94,6 @@ import os
 import yaml
 import pandas as pd
 
-# Path to the main "data" folder
-data_dir = r"C:\Users\Admin\Desktop\Prakash"
-
 
 # Store results here
 all_data = []
@@ -155,8 +152,6 @@ import os
 import yaml
 import pandas as pd
 
-# STEP 1: Set your folder path
-data_dir = r"C:\Users\Admin\Desktop\Prakash"  # Change if different
 
 # STEP 2: Load all .yaml files into one list
 all_data = []
