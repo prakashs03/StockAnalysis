@@ -20,21 +20,6 @@ This project aims to analyze NIFTY 50 stock data provided in YAML format. It inc
 
 ---
 
-## 📁 Folder Structure
-
-```
-├── data/                         # Contains YAML files organized by month
-├── final_stock_data.csv         # Processed stock data
-├── final_merged_data.csv        # Stock + Sector merged data
-├── StockAnalysis.ipynb          # Jupyter notebook with all analysis steps
-├── app.py                       # Streamlit dashboard app
-├── upload_to_postgres.py        # Script to upload data to PostgreSQL
-├── requirements.txt             # List of required Python libraries
-└── README.md                    # Project documentation
-```
-
----
-
 ## 🚀 Features
 
 ### ✅ Data Analysis
