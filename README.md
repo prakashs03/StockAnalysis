@@ -132,11 +132,7 @@ See [requirements.txt](./requirements.txt)
 ## 📝 Author
 
 Jayaprakash Srinivasan  
-📧 jayaprakash.email@example.com  
-📍 Tamil Nadu, India
+📧 jprakashs2503@gmail.com  
+📍 Chennai
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
