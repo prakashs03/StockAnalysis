@@ -69,8 +69,7 @@ This project aims to analyze NIFTY 50 stock data provided in YAML format. It inc
 ### 1️⃣ Clone this Repository
 
 ```bash
-git clone https://github.com/yourusername/stock-market-analysis.git
-cd stock-market-analysis
+git clone (https://github.com/prakashs03/StockAnalysis)
 ```
 
 ### 2️⃣ Install Dependencies
